@@ -9,10 +9,17 @@ URL = "http://api.weatherapi.com/v1/current.json"
 
 def get_weather() -> None:
 
-    response = requests.get(URL, params={
-        "key": API_KEY,
-        "q": CITY,
-    })
+    try:
+        response = requests.get(
+            URL,
+            params={
+                "key": API_KEY,
+                "q": CITY,
+            }
+        )
+        response.raise_for_status()
+    except requests.exceptions as e:
+        print(f"Error occurred: {e}")
 
     data = response.json()
     condition = data["current"]["condition"]["text"]
