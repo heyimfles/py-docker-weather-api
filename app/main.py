@@ -18,8 +18,9 @@ def get_weather() -> None:
             }
         )
         response.raise_for_status()
-    except requests.exceptions as e:
+    except requests.exceptions.RequestException as e:
         print(f"Error occurred: {e}")
+        raise
 
     data = response.json()
     condition = data["current"]["condition"]["text"]
